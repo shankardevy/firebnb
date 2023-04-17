@@ -8,4 +8,12 @@ defmodule FirebnbWeb.Components do
     </div>
     """
   end
+
+  def room_title(assigns) do
+    ~H"""
+    <h1 class="pt-3 font-bold text-gray-700 line-clamp-2">
+      <%= @text %>
+    </h1>
+    """
+  end
 end
