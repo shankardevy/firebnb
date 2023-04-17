@@ -1,6 +1,8 @@
 defmodule FirebnbWeb.Components do
   use Phoenix.Component
 
+  slot :inner_block, required: true
+
   def price(assigns) do
     ~H"""
     <div class="font-bold text-gray-700">
@@ -9,6 +11,8 @@ defmodule FirebnbWeb.Components do
     """
   end
 
+  slot :inner_block, required: true
+
   def room_title(assigns) do
     ~H"""
     <h1 class="pt-3 font-bold text-gray-700 line-clamp-2">
@@ -16,6 +20,9 @@ defmodule FirebnbWeb.Components do
     </h1>
     """
   end
+
+  slot :title, required: true, doc: "Room title"
+  slot :price, required: true, doc: "Room price"
 
   def room(assigns) do
     ~H"""
