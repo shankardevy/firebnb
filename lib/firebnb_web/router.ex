@@ -17,7 +17,7 @@ defmodule FirebnbWeb.Router do
   scope "/", FirebnbWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", HomeLive.Index
   end
 
   # Other scopes may use custom stacks.
