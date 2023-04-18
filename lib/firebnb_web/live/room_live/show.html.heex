@@ -13,7 +13,11 @@
   </div>
 </.modal>
 <%= @live_action %>
-<.modal id="description-modal" show={@live_action == :aircover} on_cancel={JS.navigate(~p"/rooms/#{@room}")}>
+<.modal
+  id="description-modal"
+  show={@live_action == :aircover}
+  on_cancel={JS.navigate(~p"/rooms/#{@room}")}
+>
   <div class="prose">
     Some message about Aircover!
   </div>
