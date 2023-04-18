@@ -24,13 +24,14 @@
           class="block w-full rounded-md border border-gray-300 bg-white py-2 pr-10 pl-3 leading-5 placeholder-gray-500 focus:border-amber-500 focus:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-amber-500 sm:text-sm"
           placeholder="Search location"
           type="search"
+          value={Keyword.get(@filters, :location)}
           phx-debounce="500"
         />
       </div>
     </div>
   </form>
 
-  <.toggle_superhost superhost={@superhost}>Superhost</.toggle_superhost>
+  <.toggle_superhost superhost={Keyword.get(@filters, :superhost)}>Superhost</.toggle_superhost>
 </div>
 
 <div class="mt-5 grid grid-cols-4 gap-x-6 gap-y-10" id="rooms-list">

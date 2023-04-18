@@ -37,7 +37,7 @@ defmodule Firebnb.Booking do
     base_query = Room
 
     Enum.reduce(filters, base_query, fn
-      {:is_superhost, _}, query -> from room in query, where: room.is_superhost == true
+      {:superhost, _}, query -> from room in query, where: room.is_superhost == true
       {:location, location}, query -> from room in query, where: ilike(room.location, ^location)
       _, query -> query
     end)
