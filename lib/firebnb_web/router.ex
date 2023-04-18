@@ -29,6 +29,21 @@ defmodule FirebnbWeb.Router do
     end
   end
 
+  scope "/admin", FirebnbWeb.Admin, as: :admin do
+    pipe_through :browser
+
+    live_session :admin,
+      on_mount: [{FirebnbWeb.UserAuth, :mount_current_user}] do
+      live "/rooms", RoomLive.Index, :index
+      live "/rooms/new", RoomLive.Index, :new
+      live "/rooms/:id/edit", RoomLive.Index, :edit
+
+      live "/rooms/:id", RoomLive.Show, :show
+      live "/rooms/:id/show/edit", RoomLive.Show, :edit
+    end
+  end
+
+
   # Other scopes may use custom stacks.
   # scope "/api", FirebnbWeb do
   #   pipe_through :api
