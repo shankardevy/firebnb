@@ -4,11 +4,8 @@
     <span><%= @room.location %>, <%= @room.country %></span>
   </div>
 </div>
-<img
-  class="h-96 w-full object-cover object-center mb-5"
-  src={@room.cover_image}
-/>
-<h1 class="text-4xl mb-5"><%= @room.title %></h1>
+<img class="h-96 w-full object-cover object-center mb-5" src={@room.cover_image} />
+<h1 id="title" class="text-4xl mb-5"><%= @room.title %></h1>
 
 <div class="grid grid-cols-8 gap-12">
   <div class="col-span-5">
@@ -17,7 +14,22 @@
     </div>
   </div>
   <div class="col-span-3">
-    <div class="shadow-md p-5">
-    </div>
+    <div class="shadow-md p-5"></div>
   </div>
 </div>
+
+<!--
+The changed text will automatically get reverted due to 2nd websocket request
+to upgrade deadview to liveview. The revert is so quick, it's difficult to see if the
+text actually changed to "Changed Title" in first place.
+
+To slow down this revert, open browser console and run `liveSocket.enableLatencySim(3000)` to
+simulate a latency of 3 seconds between the first GET request and the 2nd websocket request.
+
+You will see the "Changed Title" for about 3 seconds before it gets reverted by websocket request/response.
+-->
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function(event) {
+    document.getElementById("title").innerText = "Changed Title"
+  });
+</script>
