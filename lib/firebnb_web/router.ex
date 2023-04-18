@@ -23,6 +23,7 @@ defmodule FirebnbWeb.Router do
     live_session :guest_or_authenticated,
       on_mount: [{FirebnbWeb.UserAuth, :mount_current_user}] do
       live "/", HomeLive.Index
+      live "/rooms/:id", RoomLive.Show
     end
   end
 
