@@ -39,8 +39,10 @@
   <.toggle_superhost superhost={Keyword.get(@filters, :superhost)}>Superhost</.toggle_superhost>
 </div>
 
-<div class="mt-5 grid grid-cols-4 gap-x-6 gap-y-10" id="rooms-list">
+<div class="mt-5 grid grid-cols-4 gap-x-6 gap-y-10" id="rooms-list" phx-update="stream">
   <div :for={{dom_id, room} <- @streams.rooms} class="bg-white flex flex-col justify-between">
     <.live_component module={RoomComponent} id={dom_id} room={room} viewer={@current_user} />
   </div>
 </div>
+
+<div id="infinite-scroll-marker" phx-hook="InfiniteScroll" data-page={@page}></div>

@@ -11,7 +11,9 @@ defmodule FirebnbWeb.HomeLive.Index do
   end
 
   @impl true
-  def handle_params(params, _uri, socket) do
+  def handle_params(params, _uri, %{assigns: %{current_user: viewer}} = socket) do
+    page = 1
+
     filters =
       Enum.reduce(params, [], fn
         {"superhost", _}, filters -> filters ++ [superhost: true]
@@ -19,9 +21,11 @@ defmodule FirebnbWeb.HomeLive.Index do
         _, filters -> filters
       end)
 
-    rooms = Booking.list_rooms(socket.assigns.current_user, filters)
-    socket = stream(socket, :rooms, rooms, reset: true)
-    {:noreply, assign(socket, filters: filters)}
+    rooms = get_rooms(viewer, filters, page)
+
+    socket = stream(socket, :rooms, rooms)
+
+    {:noreply, assign(socket, page: page, filters: filters)}
   end
 
   @impl true
@@ -34,7 +38,7 @@ defmodule FirebnbWeb.HomeLive.Index do
         _ -> remove_filter(socket, :superhost)
       end
 
-    {:noreply, push_patch(socket, to: ~p"/?#{filters}")}
+    {:noreply, push_navigate(socket, to: ~p"/?#{filters}")}
   end
 
   @impl true
@@ -45,7 +49,7 @@ defmodule FirebnbWeb.HomeLive.Index do
         location -> add_filter(socket, :location, location)
       end
 
-    {:noreply, push_patch(socket, to: ~p"/?#{filters}")}
+    {:noreply, push_navigate(socket, to: ~p"/?#{filters}")}
   end
 
   @impl true
@@ -56,8 +60,23 @@ defmodule FirebnbWeb.HomeLive.Index do
   end
 
   @impl true
+  def handle_event("load-more", _, socket) do
+    %{current_user: viewer, page: page, filters: filters} = socket.assigns
+    page = page + 1
+
+    rooms = get_rooms(viewer, filters, page)
+    socket = stream(socket, :rooms, rooms)
+
+    {:noreply, assign(socket, page: page)}
+  end
+
+  @impl true
   def handle_info({:flash, type, message}, socket) do
     {:noreply, put_flash(socket, type, message)}
+  end
+
+  defp get_rooms(viewer, filters, page) do
+    Booking.list_rooms(viewer, filters, page)
   end
 
   defp add_filter(socket, key, value) do
