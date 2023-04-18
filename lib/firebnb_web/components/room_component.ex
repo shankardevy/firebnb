@@ -32,7 +32,7 @@ defmodule FirebnbWeb.RoomComponent do
       >
         Superhost
       </div>
-      <a href="">
+      <.link navigate={~p"/rooms/#{@room.id}"}>
         <div>
           <img
             src={@room.cover_image}
@@ -49,7 +49,7 @@ defmodule FirebnbWeb.RoomComponent do
             €<%= @room.price %> <span class="font-normal">night</span>
           </div>
         </div>
-      </a>
+      </.link>
     </div>
     """
   end
