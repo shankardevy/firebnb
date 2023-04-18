@@ -1,4 +1,4 @@
-<button phx-click="click" class="border b-1 px-2 bg-gray-700 text-white">click me</button>
+<button phx-click="click" class="border b-1 px-2 bg-gray-700 text-white">click me <%= @clicks %></button>
 
 <div class="mt-5 grid grid-cols-4 gap-x-6 gap-y-10" id="rooms-list">
   <div class="bg-white flex flex-col justify-between" :for={room <- @rooms}>
