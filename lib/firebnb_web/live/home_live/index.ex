@@ -7,7 +7,7 @@ defmodule FirebnbWeb.HomeLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, socket}
+    {:ok, assign(socket, suggested_locations: [])}
   end
 
   @impl true
@@ -49,6 +49,13 @@ defmodule FirebnbWeb.HomeLive.Index do
   end
 
   @impl true
+  def handle_event("location_change", %{"location" => location}, socket) do
+    suggested_locations = filter_locations(location)
+
+    {:noreply, assign(socket, :suggested_locations, suggested_locations)}
+  end
+
+  @impl true
   def handle_info({:flash, type, message}, socket) do
     {:noreply, put_flash(socket, type, message)}
   end
@@ -65,5 +72,12 @@ defmodule FirebnbWeb.HomeLive.Index do
       nil -> []
       filters -> Keyword.delete(filters, key)
     end
+  end
+
+  defp filter_locations(keyword) do
+    Booking.list_locations()
+    |> Enum.filter(fn(location) ->
+      String.contains?(String.downcase(location), String.downcase(keyword))
+    end)
   end
 end

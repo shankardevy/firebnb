@@ -25,8 +25,13 @@
           placeholder="Search location"
           type="search"
           value={Keyword.get(@filters, :location)}
+          list="location-options"
+          phx-change="location_change"
           phx-debounce="500"
         />
+        <datalist id="location-options">
+            <option :for={suggestion <- @suggested_locations} value={suggestion} />
+        </datalist>
       </div>
     </div>
   </form>
