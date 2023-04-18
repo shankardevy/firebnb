@@ -65,4 +65,29 @@ defmodule Firebnb.Booking do
     |> where(room_id: ^room.id, user_id: ^viewer.id)
     |> Repo.delete_all()
   end
+
+  def list_locations() do
+    [
+      "Bangkok",
+      "Paris",
+      "London",
+      "Dubai",
+      "Singapore",
+      "Kuala Lumpur",
+      "New York",
+      "Istanbul",
+      "Tokyo",
+      "Antalya",
+      "Seoul",
+      "Osaka",
+      "Makkah",
+      "Phuket",
+      "Pattaya",
+      "Milan",
+      "Barcelona",
+      "Palma de Mallorca",
+      "Bali",
+      "Hong Kong SAR"
+    ]
+  end
 end
