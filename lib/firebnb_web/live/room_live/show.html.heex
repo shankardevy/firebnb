@@ -35,6 +35,26 @@
     <.link navigate={~p"/rooms/#{@room}/aircover"}>Aircover</.link>
   </div>
   <div class="col-span-3">
-    <div class="shadow-md p-10"></div>
+    <div class="shadow-md p-10">
+      <.form for={@form} phx-change="validate" phx-submit="save">
+        <div class="grid grid-cols-6 gap-6">
+          <div class="col-span-6 sm:col-span-3">
+            <.input field={@form[:checkin]} type="date" label="Checkin" />
+          </div>
+
+          <div class="col-span-6 sm:col-span-3">
+            <.input field={@form[:checkout]} type="date" label="Checkout" />
+          </div>
+
+          <div class="col-span-6 sm:col-span-4">
+            <.input field={@form[:guests]} type="number" label="Guests" />
+          </div>
+
+          <div class="col-span-6">
+            <.button>Reserve</.button>
+          </div>
+        </div>
+      </.form>
+    </div>
   </div>
 </div>
