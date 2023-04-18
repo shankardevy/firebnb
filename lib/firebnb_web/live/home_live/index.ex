@@ -12,11 +12,12 @@ defmodule FirebnbWeb.HomeLive.Index do
 
   @impl true
   def handle_params(params, _uri, socket) do
-    filters = Enum.reduce(params, [], fn
-      {"superhost", _}, filters -> filters ++ [superhost: true]
-      {"location", location}, filters -> filters ++ [location: location]
-      _, filters -> filters
-    end)
+    filters =
+      Enum.reduce(params, [], fn
+        {"superhost", _}, filters -> filters ++ [superhost: true]
+        {"location", location}, filters -> filters ++ [location: location]
+        _, filters -> filters
+      end)
 
     rooms = Booking.list_rooms(socket.assigns.current_user, filters)
 
@@ -27,20 +28,22 @@ defmodule FirebnbWeb.HomeLive.Index do
   def handle_event("toggle_superhost", _, socket) do
     superhost = !Keyword.get(socket.assigns.filters, :superhost, false)
 
-    filters = case superhost do
-      true -> add_filter(socket, :superhost, true)
-      _ -> remove_filter(socket, :superhost)
-    end
+    filters =
+      case superhost do
+        true -> add_filter(socket, :superhost, true)
+        _ -> remove_filter(socket, :superhost)
+      end
 
     {:noreply, push_patch(socket, to: ~p"/?#{filters}")}
   end
 
   @impl true
   def handle_event("search", %{"location" => location}, socket) do
-    filters = case location do
-      "" -> remove_filter(socket, :location)
-      location -> add_filter(socket, :location, location)
-    end
+    filters =
+      case location do
+        "" -> remove_filter(socket, :location)
+        location -> add_filter(socket, :location, location)
+      end
 
     {:noreply, push_patch(socket, to: ~p"/?#{filters}")}
   end
