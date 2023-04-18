@@ -14,10 +14,16 @@
     </div>
   </div>
   <div class="col-span-3">
-    <div class="shadow-md p-5"></div>
+    <div class="shadow-md p-10">
+      <h2 class="text-2xl">Similar rooms</h2>
+      <ul class="list-disc">
+        <li :for={room <- @rooms}>
+          <.link patch={~p"/rooms/#{room.id}"}><%= room.title %></.link>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
-
 <!--
 The changed text will automatically get reverted due to 2nd websocket request
 to upgrade deadview to liveview. The revert is so quick, it's difficult to see if the

@@ -17,12 +17,19 @@ defmodule FirebnbWeb.RoomLive.Show do
     IO.inspect(connected?(socket), label: "Is socket connected?")
 
     room = Booking.get_room(socket.assigns.current_user, id)
+    rooms = Booking.list_rooms(socket.assigns.current_user)
 
-    {:ok, assign(socket, room: room)}
+    {:ok, assign(socket, room: room, rooms: rooms)}
   end
 
   @impl true
   def handle_params(_params, _uri, socket) do
+    # Because we moved the loading of the current room being viewed to `mount/3`
+    # navigating between one room to another will not change the content
+    # on the browser unless the page is refreshed to make a GET request.
+    #
+    # Check the next commit for the solution.
+    IO.inspect("handle_params/3 is called", label: "RoomLive")
     {:noreply, socket}
   end
 end
