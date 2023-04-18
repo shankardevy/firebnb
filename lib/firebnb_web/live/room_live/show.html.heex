@@ -1,1 +1,23 @@
-Room template
+<div class="flex justify-between mt-5 mb-1">
+  <div>
+    <span :if={@room.is_superhost}>Superhost &bull;</span>
+    <span><%= @room.location %>, <%= @room.country %></span>
+  </div>
+</div>
+<img
+  class="h-96 w-full object-cover object-center mb-5"
+  src={"/#{@room.cover_image}"}
+/>
+<h1 class="text-4xl mb-5"><%= @room.title %></h1>
+
+<div class="grid grid-cols-8 gap-12">
+  <div class="col-span-5">
+    <div class="prose">
+      <%= raw(@room.description) %>
+    </div>
+  </div>
+  <div class="col-span-3">
+    <div class="shadow-md p-5">
+    </div>
+  </div>
+</div>

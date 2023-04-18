@@ -6,6 +6,19 @@ defmodule Firebnb.Booking do
 
   import Ecto.Query
 
+  def get_room(viewer, id) do
+    viewer_id =
+      case viewer do
+        %{id: id} -> id
+        _ -> nil
+      end
+
+    Room
+    |> get_current_user_likes(viewer_id)
+    |> where(id: ^id)
+    |> Repo.one()
+  end
+
   def list_rooms() do
     Room
     |> Repo.all()
