@@ -20,7 +20,7 @@ alias Firebnb.Repo
       <p>Proin ac nisi velit. Cras sodales venenatis ipsum, sit amet aliquet ligula aliquam nec. Aliquam vel porta dolor. Cras nibh tellus, elementum ac elit vitae, pellentesque fermentum mauris. Ut facilisis nisl quis justo tincidunt, non luctus ipsum aliquet. Sed massa risus, semper vitae sollicitudin ac, sollicitudin quis augue. Aliquam lacinia tellus a elementum dapibus. Ut luctus lorem sed nulla semper consequat. In vitae suscipit massa, vitae placerat sapien.</p>
     """,
     price: String.to_integer(price),
-    cover_image: "images/rooms/#{sl_no}.webp",
+    cover_image: "/images/rooms/#{sl_no}.webp",
     location: location,
     country: country,
     latitude: latitude,
