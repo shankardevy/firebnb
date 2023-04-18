@@ -28,6 +28,19 @@ defmodule FirebnbWeb.HomeLive.Index do
   end
 
   @impl true
+  def handle_event("search", %{"location" => location}, socket) do
+    filters =
+      case location do
+        "" -> []
+        location -> [{:location, location}]
+      end
+
+    rooms = Booking.list_rooms(socket.assigns.current_user, filters)
+
+    {:noreply, assign(socket, rooms: rooms)}
+  end
+
+  @impl true
   def handle_info({:flash, type, message}, socket) do
     {:noreply, put_flash(socket, type, message)}
   end

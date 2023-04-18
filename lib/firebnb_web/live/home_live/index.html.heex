@@ -1,5 +1,5 @@
 <div class="flex items-center mb-10">
-  <form>
+  <form phx-change="search">
     <div class="max-w-lg mr-5">
       <label for="search" class="sr-only">Search location</label>
       <div class="relative w-96">
@@ -24,6 +24,7 @@
           class="block w-full rounded-md border border-gray-300 bg-white py-2 pr-10 pl-3 leading-5 placeholder-gray-500 focus:border-amber-500 focus:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-amber-500 sm:text-sm"
           placeholder="Search location"
           type="search"
+          phx-debounce="500"
         />
       </div>
     </div>
