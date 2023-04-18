@@ -3,7 +3,6 @@ defmodule Firebnb.Booking.Like do
   import Ecto.Changeset
 
   schema "likes" do
-
     field :room_id, :id
     field :user_id, :id
 
