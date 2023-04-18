@@ -67,12 +67,18 @@ defmodule FirebnbWeb.RoomComponent do
   defp like_room(%{assigns: %{room: room, viewer: viewer}} = socket) do
     Booking.like_room(room, viewer)
     room = %{room | liked_by_me: true}
+    send_message(:info, "Added #{room.title} to your favorites")
     assign(socket, :room, room)
   end
 
   defp unlike_room(%{assigns: %{room: room, viewer: viewer}} = socket) do
     Booking.unlike_room(room, viewer)
     room = %{room | liked_by_me: false}
+    send_message(:info, "Removed #{room.title} from your favorites")
     assign(socket, :room, room)
+  end
+
+  defp send_message(type, message) do
+    send(self(), {:flash, type, message})
   end
 end
