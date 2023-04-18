@@ -1,37 +1,10 @@
 <div class="mt-5 grid grid-cols-4 gap-x-6 gap-y-10" id="rooms-list">
-  <div class="bg-white flex flex-col justify-between">
+  <div class="bg-white flex flex-col justify-between" :for={room <- @rooms}>
     <.room>
-      <:title>Beautiful One Bedroom Apartment</:title>
-      <:price>72</:price>
-      <:cover_image src="/images/rooms/1.webp" />
-      <:location>Bangtok &bull; Thailand</:location>
-    </.room>
-  </div>
-
-  <div class="bg-white flex flex-col justify-between">
-    <.room>
-      <:title>Small room at home</:title>
-      <:price>85</:price>
-      <:cover_image src="/images/rooms/2.webp" />
-      <:location>Kuala Lumpur &bull; Malaysia</:location>
-    </.room>
-  </div>
-
-  <div class="bg-white flex flex-col justify-between">
-    <.room>
-      <:title>Newley refurbished room</:title>
-      <:price>68</:price>
-      <:cover_image src="/images/rooms/3.webp" />
-      <:location>London &bull; United Kingdom</:location>
-    </.room>
-  </div>
-
-  <div class="bg-white flex flex-col justify-between">
-    <.room>
-      <:title>Clean single bedroom</:title>
-      <:price>49</:price>
-      <:cover_image src="/images/rooms/4.webp" />
-      <:location>Dubai &bull; United Arab Emirates</:location>
+      <:title><%= room.title %></:title>
+      <:price><%= room.price %></:price>
+      <:cover_image src={room.cover_image} />
+      <:location><%= "#{room.location} &bull; #{room.country}" %></:location>
     </.room>
   </div>
 </div>
