@@ -9,9 +9,4 @@ defmodule FirebnbWeb.HomeLive.Index do
 
     {:ok, assign(socket, rooms: rooms, clicks: 0)}
   end
-
-  def handle_event("click", _params, socket) do
-    clicks = socket.assigns.clicks + 1
-    {:noreply, assign(socket, clicks: clicks)}
-  end
 end
