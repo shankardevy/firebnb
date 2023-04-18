@@ -17,6 +17,15 @@ defmodule FirebnbWeb.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/", FirebnbWeb do
+    pipe_through :browser
+
+    live_session :guest_or_authenticated,
+      on_mount: [{FirebnbWeb.UserAuth, :mount_current_user}] do
+      live "/", HomeLive.Index
+    end
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", FirebnbWeb do
   #   pipe_through :api
@@ -60,7 +69,6 @@ defmodule FirebnbWeb.Router do
 
     live_session :require_authenticated_user,
       on_mount: [{FirebnbWeb.UserAuth, :ensure_authenticated}] do
-      live "/", HomeLive.Index
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
     end

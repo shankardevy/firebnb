@@ -55,6 +55,12 @@ defmodule FirebnbWeb.RoomComponent do
   end
 
   @impl true
+  def handle_event("toggle_like", _, %{assigns: %{viewer: nil}} = socket) do
+    send_message(:error, "Sign in to save to your favorites")
+
+    {:noreply, socket}
+  end
+
   def handle_event("toggle_like", _, socket) do
     like = !socket.assigns.room.liked_by_me
 
