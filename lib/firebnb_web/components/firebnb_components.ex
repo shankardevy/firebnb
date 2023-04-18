@@ -24,6 +24,7 @@ defmodule FirebnbWeb.Components do
   slot :title, required: true, doc: "Room title"
   slot :price, required: true, doc: "Room price"
   slot :location, required: true, doc: "Room location"
+  attr :superhost, :boolean, default: false
 
   slot :cover_image, required: true do
     attr :src, :string, required: true
@@ -31,7 +32,13 @@ defmodule FirebnbWeb.Components do
 
   def room(assigns) do
     ~H"""
-    <a href="">
+    <a href="" class="relative">
+      <div
+        :if={@superhost}
+        class="absolute left-2 top-2 rounded-sm bg-slate-100 py-0.5 px-1 text-sm font-bold"
+      >
+        Superhost
+      </div>
       <div>
         <img
           :for={image <- @cover_image}
