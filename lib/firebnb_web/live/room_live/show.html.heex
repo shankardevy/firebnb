@@ -15,27 +15,6 @@
   </div>
   <div class="col-span-3">
     <div class="shadow-md p-10">
-      <h2 class="text-2xl">Similar rooms</h2>
-      <ul class="list-disc">
-        <li :for={room <- @rooms}>
-          <.link patch={~p"/rooms/#{room.id}"}><%= room.title %></.link>
-        </li>
-      </ul>
     </div>
   </div>
 </div>
-<!--
-The changed text will automatically get reverted due to 2nd websocket request
-to upgrade deadview to liveview. The revert is so quick, it's difficult to see if the
-text actually changed to "Changed Title" in first place.
-
-To slow down this revert, open browser console and run `liveSocket.enableLatencySim(3000)` to
-simulate a latency of 3 seconds between the first GET request and the 2nd websocket request.
-
-You will see the "Changed Title" for about 3 seconds before it gets reverted by websocket request/response.
--->
-<script type="text/javascript">
-  document.addEventListener("DOMContentLoaded", function(event) {
-    document.getElementById("title").innerText = "Changed Title"
-  });
-</script>
