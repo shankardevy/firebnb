@@ -1,5 +1,6 @@
 defmodule Firebnb.Booking do
   alias Firebnb.Booking.Like
+  alias Firebnb.Booking.Reservation
   alias Firebnb.Booking.Room
 
   alias Firebnb.Repo
@@ -89,5 +90,16 @@ defmodule Firebnb.Booking do
       "Bali",
       "Hong Kong SAR"
     ]
+  end
+
+  def change_reservation(reservation, params \\ %{}) do
+    reservation
+    |> Reservation.changeset(params)
+  end
+
+  def create_reservation(params) do
+    %Reservation{}
+    |> change_reservation(params)
+    |> Repo.insert()
   end
 end
