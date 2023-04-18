@@ -7,14 +7,21 @@
 <img class="h-96 w-full object-cover object-center mb-5" src={@room.cover_image} />
 <h1 id="title" class="text-4xl mb-5"><%= @room.title %></h1>
 
+<.modal id="description-modal">
+  <div class="prose">
+    <%= raw(@room.description) %>
+  </div>
+</.modal>
 <div class="grid grid-cols-8 gap-12">
   <div class="col-span-5">
-    <div class="prose">
+    <div class="prose line-clamp-5">
       <%= raw(@room.description) %>
     </div>
+    <button type="button" class="flex items-center" phx-click={show_modal("description-modal")}>
+      <span class="underline underline-offset-2">Show more &rarr;</span>
+    </button>
   </div>
   <div class="col-span-3">
-    <div class="shadow-md p-10">
-    </div>
+    <div class="shadow-md p-10"></div>
   </div>
 </div>
