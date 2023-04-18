@@ -12,6 +12,12 @@
     <%= raw(@room.description) %>
   </div>
 </.modal>
+<%= @live_action %>
+<.modal id="description-modal" show={@live_action == :aircover} on_cancel={JS.navigate(~p"/rooms/#{@room}")}>
+  <div class="prose">
+    Some message about Aircover!
+  </div>
+</.modal>
 <div class="grid grid-cols-8 gap-12">
   <div class="col-span-5">
     <div class="prose line-clamp-5">
@@ -20,6 +26,7 @@
     <button type="button" class="flex items-center" phx-click={show_modal("description-modal")}>
       <span class="underline underline-offset-2">Show more &rarr;</span>
     </button>
+    <.link navigate={~p"/rooms/#{@room}/aircover"}>Aircover</.link>
   </div>
   <div class="col-span-3">
     <div class="shadow-md p-10"></div>
