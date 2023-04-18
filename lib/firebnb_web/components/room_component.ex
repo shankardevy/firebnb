@@ -1,15 +1,21 @@
 defmodule FirebnbWeb.RoomComponent do
   use FirebnbWeb, :live_component
 
+  alias Firebnb.Booking
+
   @impl true
   def render(assigns) do
     ~H"""
     <div class="relative">
       <!-- replace class "text-slate-300 hover:text-red-600" with "text-red-600" to toggle between liked and unliked state -->
-      <button class={[
-        "absolute right-2 top-2",
-        "text-slate-300 hover:text-red-600"
-      ]}>
+      <button
+        class={[
+          "absolute right-2 top-2",
+          "text-slate-300 hover:text-red-600"
+        ]}
+        phx-click="toggle_like"
+        phx-target={@myself}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
@@ -45,5 +51,25 @@ defmodule FirebnbWeb.RoomComponent do
       </a>
     </div>
     """
+  end
+
+  @impl true
+  def handle_event("toggle_like", _, socket) do
+    like = !socket.assigns.room.liked_by_me
+
+    case like do
+      true -> {:noreply, like_room(socket)}
+      _ -> {:noreply, unlike_room(socket)}
+    end
+  end
+
+  defp like_room(%{assigns: %{room: room, viewer: viewer}} = socket) do
+    Booking.like_room(room, viewer)
+    socket
+  end
+
+  defp unlike_room(%{assigns: %{room: room, viewer: viewer}} = socket) do
+    Booking.unlike_room(room, viewer)
+    socket
   end
 end
