@@ -12,9 +12,11 @@
     <%= raw(@room.description) %>
   </div>
 </.modal>
+
 <%= @live_action %>
+
 <.modal
-  id="description-modal"
+  id="aircover-modal"
   show={@live_action == :aircover}
   on_cancel={JS.navigate(~p"/rooms/#{@room}")}
 >
