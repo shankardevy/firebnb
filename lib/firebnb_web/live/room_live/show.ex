@@ -3,7 +3,7 @@ defmodule FirebnbWeb.RoomLive.Show do
   alias Firebnb.Booking
 
   @impl true
-  def mount(%{"id" => id}, _session, socket) do
+  def mount(_params, _session, socket) do
     # Both of these inspect statements will be printed twice
     # if you visit directly `/rooms/{id}` in the browser because
     # this `mount/3` is getting called twice -- First as a GET request
@@ -16,20 +16,26 @@ defmodule FirebnbWeb.RoomLive.Show do
     IO.inspect("MOUNT IS CALLED", label: "RoomLive mount/3")
     IO.inspect(connected?(socket), label: "Is socket connected?")
 
-    room = Booking.get_room(socket.assigns.current_user, id)
     rooms = Booking.list_rooms(socket.assigns.current_user)
 
-    {:ok, assign(socket, room: room, rooms: rooms)}
+    {:ok, assign(socket, rooms: rooms)}
   end
 
   @impl true
-  def handle_params(_params, _uri, socket) do
-    # Because we moved the loading of the current room being viewed to `mount/3`
-    # navigating between one room to another will not change the content
-    # on the browser unless the page is refreshed to make a GET request.
+  def handle_params(%{"id" => id}, _uri, socket) do
+    # Previously, because we moved the loading of the current room being viewed to `mount/3`
+    # navigating between one room to another was not changing the content
+    # on the browser unless the page was refreshed to make a GET request.
     #
-    # Check the next commit for the solution.
+    # The solution to this pitfall is move page specific loading to `handle_params/3`
+    # and keep the common data across different pages in `mount/3`.
+    # In this case, list of other rooms available is a common data, while
+    # the room that is being viewed is page specific data and should be loaded in `handle_params/3`
+    # as shown below:
+
     IO.inspect("handle_params/3 is called", label: "RoomLive")
-    {:noreply, socket}
+    room = Booking.get_room(socket.assigns.current_user, id)
+
+    {:noreply, assign(socket, room: room)}
   end
 end
