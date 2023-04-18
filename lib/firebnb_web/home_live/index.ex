@@ -3,6 +3,7 @@ defmodule FirebnbWeb.HomeLive.Index do
   import FirebnbWeb.Components
 
   alias Firebnb.Booking
+  alias FirebnbWeb.RoomComponent
 
   def mount(_params, _session, socket) do
     rooms = Booking.list_rooms(socket.assigns.current_user)

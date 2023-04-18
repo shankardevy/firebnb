@@ -2,11 +2,6 @@
 
 <div class="mt-5 grid grid-cols-4 gap-x-6 gap-y-10" id="rooms-list">
   <div :for={room <- @rooms} class="bg-white flex flex-col justify-between">
-    <.room superhost={room.is_superhost}>
-      <:title><%= room.title %></:title>
-      <:price><%= room.price %></:price>
-      <:cover_image src={room.cover_image} />
-      <:location><%= "#{room.location} &bull; #{room.country}" %></:location>
-    </.room>
+    <.live_component module={RoomComponent} id={room.id} room={room} />
   </div>
 </div>
