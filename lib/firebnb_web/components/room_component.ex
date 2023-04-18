@@ -11,7 +11,8 @@ defmodule FirebnbWeb.RoomComponent do
       <button
         class={[
           "absolute right-2 top-2",
-          "text-slate-300 hover:text-red-600"
+          !@room.liked_by_me && "text-slate-300 hover:text-red-600",
+          @room.liked_by_me && "text-red-600"
         ]}
         phx-click="toggle_like"
         phx-target={@myself}
