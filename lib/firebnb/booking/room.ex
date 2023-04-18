@@ -12,6 +12,7 @@ defmodule Firebnb.Booking.Room do
     field :price, :integer
     field :title, :string
     field :is_superhost, :boolean
+    field :liked_by_me, :boolean, virtual: true
 
     timestamps()
   end
