@@ -20,8 +20,8 @@ defmodule FirebnbWeb.HomeLive.Index do
       end)
 
     rooms = Booking.list_rooms(socket.assigns.current_user, filters)
-
-    {:noreply, assign(socket, rooms: rooms, filters: filters)}
+    socket = stream(socket, :rooms, rooms, reset: true)
+    {:noreply, assign(socket, filters: filters)}
   end
 
   @impl true
@@ -76,7 +76,7 @@ defmodule FirebnbWeb.HomeLive.Index do
 
   defp filter_locations(keyword) do
     Booking.list_locations()
-    |> Enum.filter(fn(location) ->
+    |> Enum.filter(fn location ->
       String.contains?(String.downcase(location), String.downcase(keyword))
     end)
   end
