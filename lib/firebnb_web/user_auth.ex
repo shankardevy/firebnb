@@ -162,6 +162,21 @@ defmodule FirebnbWeb.UserAuth do
     end
   end
 
+  def on_mount(:ensure_admin, _params, session, socket) do
+    socket = mount_current_user(session, socket)
+
+    if socket.assigns.current_user && socket.assigns.current_user.email == "shankardevy@gmail.com" do
+      {:cont, socket}
+    else
+      socket =
+        socket
+        |> Phoenix.LiveView.put_flash(:error, "Only admins can access this page.")
+        |> Phoenix.LiveView.redirect(to: ~p"/")
+
+      {:halt, socket}
+    end
+  end
+
   def on_mount(:redirect_if_user_is_authenticated, _params, session, socket) do
     socket = mount_current_user(session, socket)
 
@@ -207,6 +222,18 @@ defmodule FirebnbWeb.UserAuth do
       |> put_flash(:error, "You must log in to access this page.")
       |> maybe_store_return_to()
       |> redirect(to: ~p"/users/log_in")
+      |> halt()
+    end
+  end
+
+  def require_admin_authenticated_user(conn, _opts) do
+    if conn.assigns[:current_user] && conn.assigns[:current_user].email == "shankardevy@gmail.com" do
+      conn
+    else
+      conn
+      |> put_flash(:error, "Only admins can access this page.")
+      |> maybe_store_return_to()
+      |> redirect(to: ~p"/")
       |> halt()
     end
   end
